@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
 import PublicRoute from "./components/PublicRoute";
@@ -8,6 +8,7 @@ import MovieId from "./pages/MovieId";
 import Movies from "./pages/Movies";
 
 const AppRouter = () => {
+
   return (
     <BrowserRouter>
       <Navbar />
@@ -17,8 +18,7 @@ const AppRouter = () => {
         </Route>
         <Route path="/movies" element={<PrivateRoute />}>
           <Route path="/movies" element={<Movies />} />
-          <Route path="/movies/1" element={<MovieId id={1} />} />
-          <Route path="/movies/2" element={<MovieId id={2} />} />
+          <Route path="/movies/:id" element={<MovieId />} />
         </Route>
         <Route path="*" element={<NonExistentRoutes />} />
       </Routes>

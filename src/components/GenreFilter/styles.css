@@ -1,0 +1,52 @@
+.movie-genres-card-container {
+  display: flex;
+  background-color: #6c6c6c;
+  align-items: center;
+  margin: 0 auto 20px;
+  height: 60px;
+  border-radius: 4px;
+  padding: 5px 20px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+  max-width: 436px;
+}
+
+.movie-genres-form-container {
+  width: 100%;
+}
+
+.genre-filter-selector__control {
+  background-color: unset !important;
+  border: 1px solid #e1e1e1 !important;
+  height: 50px;
+  max-width: 260px;
+}
+
+.genre-filter-selector__control--is-focused {
+  box-shadow: 0 0 0 1px #ffc700 !important;
+}
+
+.genre-filter-selector__placeholder {
+  color: #ccc !important;
+}
+
+.genre-filter-selector__single-value {
+  color: #fff !important;
+}
+
+@media (min-width: 576px) {
+  .movie-genres-card-container {
+    max-width: none;
+  }
+}
+
+@media (min-width: 768px) {
+    .movie-genres-card-container {
+      margin-bottom: 40px;
+    }
+}
+
+@media (min-width: 1200px) {
+  .movie-genres-card-container {
+    height: 80px;
+  }
+}
