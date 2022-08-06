@@ -2,7 +2,12 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
-import { getTokenData, requestBackEndLogin, saveAuthData } from "../../util/requests";
+import {
+  getTokenData,
+  requestBackEndLogin,
+  saveAuthData,
+} from "../../util/requests";
+import { toast } from "react-toastify";
 import Loader from "../Loader";
 import "./styles.css";
 
@@ -27,19 +32,21 @@ const LoginCard = () => {
   } = useForm<FormData>();
 
   const onSubmit = (formData: FormData) => {
-    setIsLoading(true)
+    setIsLoading(true);
     requestBackEndLogin(formData)
       .then((response) => {
         saveAuthData(response.data);
         setHasError(false);
-        setAuthContextData({authenticated: true, tokenData: getTokenData()});
+        setAuthContextData({ authenticated: true, tokenData: getTokenData() });
         setIsLoading(false);
-        navigate("/movies", {replace: true});
+        navigate("/movies");
+        toast.success("Login efetuado com Sucesso!");
       })
       .catch((error) => {
         setHasError(true);
         console.log(error);
         setIsLoading(false);
+        toast.error("Problemas ao efetuar login.");
       });
   };
 
@@ -47,9 +54,7 @@ const LoginCard = () => {
     <section>
       <div className="login-card-container">
         <h2>LOGIN</h2>
-        {hasError && (
-          <div className="error-alert">Erro ao tentar efetuar o login</div>
-        )}
+        {hasError && <div className="error-alert">Erro ao efetuar o login</div>}
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="login-form-container"
@@ -59,13 +64,15 @@ const LoginCard = () => {
               required: "Campo obrigatório",
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Email inválido"
-              } 
+                message: "Email inválido",
+              },
             })}
             type="text"
             placeholder="Email"
             name="username"
-            className={`${errors.username ? 'error-input-field second-edge' : 'input-field'}`}
+            className={`${
+              errors.username ? "error-input-field second-edge" : "input-field"
+            }`}
           />
           <div className="required-field">{errors.username?.message}</div>
           <input
@@ -75,11 +82,15 @@ const LoginCard = () => {
             type="password"
             placeholder="Senha"
             name="password"
-            className={`${errors.password ? 'error-input-field' : 'input-field'}`}
+            className={`${
+              errors.password ? "error-input-field" : "input-field"
+            }`}
           />
           <div className="required-field">{errors.password?.message}</div>
           {isLoading && <Loader />}
-          <button type="submit" className="button-submit">FAZER LOGIN</button>
+          <button type="submit" className="button-submit">
+            FAZER LOGIN
+          </button>
         </form>
       </div>
     </section>

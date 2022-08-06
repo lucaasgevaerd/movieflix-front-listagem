@@ -16,8 +16,7 @@ function MovieCard({ id, imgUrl, title, year, subTitle }: Props) {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <div className="movie-card-container">
-      <Link to={`/movies/${id}`} key={id}>
+      <div className="movie-card-container">
         {loaded ? null : (
           <div className="loading-movie-card-container">
             <img
@@ -26,7 +25,7 @@ function MovieCard({ id, imgUrl, title, year, subTitle }: Props) {
               className="loading-movie-card-image"
             />
             <div className="loading-movie-card-loader">
-            <Loader />
+              <Loader />
             </div>
           </div>
         )}
@@ -40,8 +39,7 @@ function MovieCard({ id, imgUrl, title, year, subTitle }: Props) {
         <p className="movie-card-title">{title}</p>
         <p className="movie-card-year">{year}</p>
         <span className="movie-card-subtitle">{subTitle}</span>
-      </Link>
-    </div>
+      </div>
   );
 }
 

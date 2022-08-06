@@ -4,19 +4,16 @@ import Select from "react-select";
 import { Genre } from "../../types/vendor/genre";
 import { requestBackEnd } from "../../util/requests";
 
-import './styles.css';
+import "./styles.css";
 
 type Props = {
   onSubmitFilter: Function;
+  searchParameterGenrer: any;
 };
 
-const GenreFilter = ({ onSubmitFilter }: Props) => {
+const GenreFilter = ({ onSubmitFilter, searchParameterGenrer }: Props) => {
   const { control, setValue, getValues } = useForm();
   const [genres, setGenres] = useState<Genre[]>([]);
-  const [genreSelect, setGenreSelect] = useState<Genre>({
-    id: 0,
-    name: "",
-  });
 
   useEffect(() => {
     requestBackEnd({ url: "/genres", withCredentials: true }).then(
@@ -34,8 +31,7 @@ const GenreFilter = ({ onSubmitFilter }: Props) => {
         id: getValues("id"),
         name: getValues("name"),
       };
-      setGenreSelect(obj);
-      handleGenrerRequest(obj.id)
+      handleGenrerRequest(obj.id);
     } else {
       setValue("id", value.id);
       setValue("name", value.name);
@@ -43,8 +39,7 @@ const GenreFilter = ({ onSubmitFilter }: Props) => {
         id: getValues("id"),
         name: getValues("name"),
       };
-      setGenreSelect(obj);
-      handleGenrerRequest(obj.id)
+      handleGenrerRequest(obj.id);
     }
   };
 
@@ -59,16 +54,20 @@ const GenreFilter = ({ onSubmitFilter }: Props) => {
           <Controller
             name="select"
             control={control}
-            defaultValue={null}
             render={({ field: { onChange } }) => (
               <Select
                 classNamePrefix={"genre-filter-selector"}
+                options={genres}
                 getOptionValue={(option) => String(option.id)}
                 getOptionLabel={(option) => option.name}
-                options={genres}
                 placeholder={"Gênero"}
                 isClearable
                 onChange={(value) => handleChangeGenre(value as Genre)}
+                escapeClearsValue={true}
+                value={genres.filter(
+                  (e) =>
+                    e.id === parseInt(searchParameterGenrer) || ''
+                )}
               />
             )}
           />

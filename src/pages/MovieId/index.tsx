@@ -1,60 +1,79 @@
 import { AxiosRequestConfig } from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import MovieIdCard from "../../components/MovieIdCard";
 import ReviewForm from "../../components/ReviewForm";
 import ReviewsCard from "../../components/ReviewsCard";
-import { Movie } from "../../types/vendor/movie";
-import { SpringPage } from "../../types/vendor/springPage";
+import { MovieIdContent } from "../../types/vendor/movieIdContent";
+import { Review } from "../../types/vendor/review";
 import { hasAnyRoles, requestBackEnd } from "../../util/requests";
 
 import "./styles.css";
 
 const MovieId = () => {
-  const [id, setId] = useState();
-  const [imgUrl, setimgUrl] = useState();
-  const [title, setTitle] = useState();
-  const [year, setYear] = useState();
-  const [subTitle, setSubTitle] = useState();
 
-  const parameter = useParams();
-  const parameterId = Number(parameter.id);
+  const [movieIdContent, setMovieIdContent] = useState<MovieIdContent>();
+  const [reviews, setReviews] = useState<Review[]>([]);
+
+  const movie = useParams();
+  const movieId = Number(movie.id);
 
   useEffect(() => {
     const params: AxiosRequestConfig = {
-      url: `/movies/${parameterId}`,
+      url: `/movies/${movieId}`,
       withCredentials: true,
-      params: {
-        page: 0,
-        size: 1,
-      },
     };
 
     requestBackEnd(params).then((response) => {
-      setId(response.data.id);
-      setimgUrl(response.data.imgUrl);
-      setTitle(response.data.title);
-      setYear(response.data.year);
-      setSubTitle(response.data.subTitle);
+      setMovieIdContent(response.data);
     });
-  });
+  }, [movieId]);
+
+  useEffect(() => {
+    const params: AxiosRequestConfig = {
+      url: `/movies/${movieId}/reviews`,
+      withCredentials: true,
+    };
+
+    requestBackEnd(params).then((response) => {
+      setReviews(response.data)
+    });
+  }, [movieId]);
+
+  const handleInsertReview = (review: Review) => {
+    const clone = [...reviews];
+    clone.push(review);
+    setReviews(clone);
+  }
 
   return (
     <>
-      {id && (
+      {movieIdContent?.id && (
         <>
-        <main className="">
-          <section className="">
-            <img src={imgUrl} alt={title} className=""/>
-            <p className="">{title}</p>
-            <p className="">{year}</p>
-            <span className="">{subTitle}</span>
-          </section>
-          <section>
-            {hasAnyRoles(["ROLE_MEMBER"]) && <ReviewForm />}
-          </section>
-          <section>
-            <ReviewsCard />
-          </section>
+          <main className="movie-id-main-container">
+            <MovieIdCard
+              imgUrl={movieIdContent?.imgUrl}
+              title={movieIdContent?.title}
+              year={movieIdContent?.year}
+              subTitle={movieIdContent?.subTitle}
+              synopsis={movieIdContent?.synopsis}
+            />
+
+            {hasAnyRoles(["ROLE_MEMBER"]) && <ReviewForm movieId={movieId} onInsertReview={handleInsertReview}/>}
+
+            {reviews.length !== 0 && (
+              <section className="movie-reviews-card-container">
+                {reviews.map((rev: Review) => (
+                  <ReviewsCard
+                    id={rev.id}
+                    movieId={rev.movieId}
+                    text={rev.text}
+                    user={rev.user}
+                    key={rev.id}
+                  />
+                ))}
+              </section>
+            )}
           </main>
         </>
       )}

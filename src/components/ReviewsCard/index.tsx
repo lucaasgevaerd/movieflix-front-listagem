@@ -1,58 +1,28 @@
 import { ReactComponent as Star } from "../../assets/images/star.svg";
 import './styles.css';
 
-const ReviewsCard = () => {
+type Props = {
+  id: number;
+  text: string;
+  movieId: number;
+  user: {
+    id: number;
+    email: string;
+    name: string;
+  }
+}
+
+const ReviewsCard = ( {id, text, movieId, user} : Props) => {
     return (
         <section className="reviews-card-container">
           <div className="review-card">
             <div className="member-name">
               <Star />
-              <h3>Maria Silva</h3>
+              <h3>{user.name}</h3>
             </div>
             <div className="review-comment">
               <p>
-                Gostei muito do filme. Foi muito bom mesmo. Pena que durou
-                pouco.
-              </p>
-            </div>
-            <div className="member-name">
-              <Star />
-              <h3>Maria Silva</h3>
-            </div>
-            <div className="review-comment">
-              <p>
-                Gostei muito do filme. Foi muito bom mesmo. Pena que durou
-                pouco.
-              </p>
-            </div>
-            <div className="member-name">
-              <Star />
-              <h3>Maria Silva</h3>
-            </div>
-            <div className="review-comment">
-              <p>
-                Gostei muito do filme. Foi muito bom mesmo. Pena que durou
-                pouco.
-              </p>
-            </div>
-            <div className="member-name">
-              <Star />
-              <h3>Maria Silva</h3>
-            </div>
-            <div className="review-comment">
-              <p>
-                Gostei muito do filme. Foi muito bom mesmo. Pena que durou
-                pouco.
-              </p>
-            </div>
-            <div className="member-name">
-              <Star />
-              <h3>Maria Silva</h3>
-            </div>
-            <div className="review-comment">
-              <p>
-                Gostei muito do filme. Foi muito bom mesmo. Pena que durou
-                pouco.
+                {text}
               </p>
             </div>
           </div>

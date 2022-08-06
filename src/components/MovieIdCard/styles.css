@@ -1,0 +1,106 @@
+.movie-id-card-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #6c6c6c;
+  margin-bottom: 25px;
+  padding: 20px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+}
+
+.movie-id-card-image-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+.movie-id-card-image {
+  width: 100%;
+  max-width: 608px;
+}
+
+.movie-id-card-title {
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: -0.015em;
+  color: #ffffff;
+}
+
+.movie-id-card-year {
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.015em;
+  color: #ffc700;
+}
+
+.movie-id-card-subtitle {
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: -0.015em;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.movie-id-card-rectangle-synopsis {
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  padding: 13px 10px;
+}
+
+.movie-id-card-synopsis {
+  font-weight: 400;
+  font-size: 16px;
+  text-align: justify;
+  letter-spacing: -0.015em;
+  color: #9e9e9e;
+}
+
+@media (min-width: 576px) {
+  .movie-id-card-container {
+    margin-bottom: 20px;
+  }
+
+  .movie-id-card-subtitle {
+    margin-bottom: 21px;
+  }
+}
+
+@media (min-width: 768px) {
+  .movie-id-card-container {
+    padding: 40px;
+    margin-bottom: 40px;
+  }
+
+  .movie-id-card-title {
+    font-size: 36px;
+  }
+
+  .movie-id-card-year {
+    font-size: 24px;
+  }
+
+  .movie-id-card-subtitle {
+    font-size: 24px;
+    margin-bottom: 39px;
+  }
+
+  .movie-id-card-synopsis {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .movie-id-card-container {
+    flex-direction: row;
+  }
+
+  .movie-id-card-image-container {
+    margin-right: 40px;
+    min-width: 500px;
+  }
+
+  .movie-id-card-subtitle {
+    margin-bottom: 16px;
+  }
+}

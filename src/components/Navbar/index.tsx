@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
+import { toast } from "react-toastify";
 import {
   getTokenData,
   isAuthenticated,
@@ -33,6 +34,7 @@ const Navbar = () => {
       authenticated: false,
     });
     navigate("/", { replace: true });
+    toast.info("Logout efetuado com sucesso!");
   };
 
   return (
@@ -40,11 +42,11 @@ const Navbar = () => {
       <nav className="navbar-container">
         <div className="navbar-content">
           <h1 className="navbar-brand">MovieFlix</h1>
-        {authContextData.authenticated && (
-          <a href="#logout" onClick={handleLogoutClick}>
-            <div className="logout">SAIR</div>
-          </a>
-        )}
+          {authContextData.authenticated && (
+            <a href="#logout" onClick={handleLogoutClick}>
+              <div className="logout">SAIR</div>
+            </a>
+          )}
         </div>
       </nav>
     </header>
